@@ -94,10 +94,10 @@ def start_route():
     # session = Session(engine)
 
     """Return a JSON list of the minimum temperature, the average temperature, and the max temperature for a given start or start-end range."""
-    # Query the dates and temperature observations of the most active station for the last year of data.
-    # results = session.query(station.station, station.name).all()
+    # query the tobs list for a start date
+    # results = session.query(session.query for tobs date).all()
     # session.close()
-    # return jsonify()
+    # return jsonify(results)
 
 
 @app.route("/api/v1.0/<start>/<end>")
@@ -106,10 +106,10 @@ def start_end():
     # session = Session(engine)
 
     """Return a JSON list of the minimum temperature, the average temperature, and the max temperature for a given start or start-end range."""
-    # Query the dates and temperature observations of the most active station for the last year of data.
-    # results = session.query(station.station, station.name).all()
+    # results = session.query(tobs for start and end date)
+    # def calculation for TMIN, TAVG and TMAX
     # session.close()
-    # return jsonify()
+    # return jsonify(results)
 
 if __name__ == '__main__':
     app.run(debug=True)
