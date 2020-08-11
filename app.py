@@ -60,8 +60,53 @@ def precipitation():
         prcp_dict = {}
         prcp_dict["date"] = date
         prcp_dict["prcp"] = prcp
-        all_passengers.append(passenger_dict)
+        preciptation_list.append(precipitation_dict)
 
+    return jsonify(precipitation_list)
+
+@app.route("/api/v1.0/stations")
+def stations():
+    # Create our session (link) from Python to the DB
+    session = Session(engine)
+
+    """Return a JSON list of stations from the dataset."""
+    # Query all stations
+    results = session.query(station.station, station.name).all()
+    session.close()
+    return jsonify(precipitation_list)
+
+@app.route("/api/v1.0/tobs")
+def stations():
+    # Create our session (link) from Python to the DB
+    session = Session(engine)
+
+    """Return a JSON list of temperature observations (TOBS) for the previous year.."""
+    # Query the dates and temperature observations of the most active station for the last year of data.
+    results = session.query(station.station, station.name).all()
+    session.close()
+    return jsonify(precipitation_list)
+
+@app.route("/api/v1.0/<start>")
+def stations():
+    # Create our session (link) from Python to the DB
+    session = Session(engine)
+
+    """Return a JSON list of temperature observations (TOBS) for the previous year.."""
+    # Query the dates and temperature observations of the most active station for the last year of data.
+    results = session.query(station.station, station.name).all()
+    session.close()
+    return jsonify(precipitation_list)
+
+
+@app.route("/api/v1.0/<start>/<end>")
+def stations():
+    # Create our session (link) from Python to the DB
+    session = Session(engine)
+
+    """Return a JSON list of temperature observations (TOBS) for the previous year.."""
+    # Query the dates and temperature observations of the most active station for the last year of data.
+    results = session.query(station.station, station.name).all()
+    session.close()
     return jsonify(precipitation_list)
 
 if __name__ == '__main__':
