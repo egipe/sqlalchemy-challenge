@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
 
 from flask import Flask, jsonify
+import datetime as dt
 
 
 #################################################
@@ -60,7 +61,7 @@ def precipitation():
         prcp_dict = {}
         prcp_dict["date"] = date
         prcp_dict["prcp"] = prcp
-        preciptation_list.append(precipitation_dict)
+        precipitation_list.append(prcp_dict)
 
     return jsonify(precipitation_list)
 
@@ -73,41 +74,42 @@ def stations():
     # Query all stations
     results = session.query(station.station, station.name).all()
     session.close()
-    return jsonify(precipitation_list)
+    return jsonify(results)
 
 @app.route("/api/v1.0/tobs")
-def stations():
+def tobs():
     # Create our session (link) from Python to the DB
     session = Session(engine)
 
-    """Return a JSON list of temperature observations (TOBS) for the previous year.."""
+    """Return a JSON list of temperature observations (TOBS) for the previous year."""
     # Query the dates and temperature observations of the most active station for the last year of data.
-    results = session.query(station.station, station.name).all()
+    last_year = dt.date(2017,8,23) - dt.timedelta(days=365)
+    results = session.query(measurement.date, measurement.tobs).filter(measurement.station == 'USC00519281').filter(measurement.date > last_year).all()
     session.close()
-    return jsonify(precipitation_list)
+    return jsonify(results)
 
 @app.route("/api/v1.0/<start>")
-def stations():
+def start_route():
     # Create our session (link) from Python to the DB
-    session = Session(engine)
+    # session = Session(engine)
 
-    """Return a JSON list of temperature observations (TOBS) for the previous year.."""
+    """Return a JSON list of the minimum temperature, the average temperature, and the max temperature for a given start or start-end range."""
     # Query the dates and temperature observations of the most active station for the last year of data.
-    results = session.query(station.station, station.name).all()
-    session.close()
-    return jsonify(precipitation_list)
+    # results = session.query(station.station, station.name).all()
+    # session.close()
+    # return jsonify()
 
 
 @app.route("/api/v1.0/<start>/<end>")
-def stations():
+def start_end():
     # Create our session (link) from Python to the DB
-    session = Session(engine)
+    # session = Session(engine)
 
-    """Return a JSON list of temperature observations (TOBS) for the previous year.."""
+    """Return a JSON list of the minimum temperature, the average temperature, and the max temperature for a given start or start-end range."""
     # Query the dates and temperature observations of the most active station for the last year of data.
-    results = session.query(station.station, station.name).all()
-    session.close()
-    return jsonify(precipitation_list)
+    # results = session.query(station.station, station.name).all()
+    # session.close()
+    # return jsonify()
 
 if __name__ == '__main__':
     app.run(debug=True)
